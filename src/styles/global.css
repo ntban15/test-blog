@@ -1,0 +1,19 @@
+html {
+  background-color: #30475e;
+}
+
+a {
+  color: #f2a365;
+}
+
+body {
+  color: #ececec;
+}
+
+blockquote {
+  border-left: 6px solid #cacaca;
+}
+
+blockquote p {
+  color: #cacaca;
+}

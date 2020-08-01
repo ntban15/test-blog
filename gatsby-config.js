@@ -1,14 +1,14 @@
 module.exports = {
   siteMetadata: {
-    title: `An's blog`,
+    title: `Ramblings of a Restless Mind`,
     author: {
-      name: `Bao AN`,
-      summary: `dev dao at now`,
+      name: `Ân /ən/`,
+      summary: `I write things`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
+    description: `A place for my Internal Conversations`,
+    siteUrl: `https://2rl4.me/`,
     social: {
-      twitter: `kylemathews`,
+      github: `ntban15`,
     },
   },
   plugins: [
@@ -60,8 +60,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Ramblings of a Restless Mind`,
+        short_name: `Ramblings`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
