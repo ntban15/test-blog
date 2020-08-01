@@ -5,7 +5,7 @@ module.exports = {
       name: `Ân /ən/`,
       summary: `I write things`,
     },
-    description: `A place for my Internal Conversations`,
+    description: `The place for my Internal Conversations`,
     siteUrl: `https://2rl4.me/`,
     social: {
       github: `ntban15`,
