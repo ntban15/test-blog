@@ -10,6 +10,8 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
+import { PAGE_TITLE } from "../const"
+
 const SEO = ({ description, lang, meta, title }) => {
   const { site } = useStaticQuery(
     graphql`
@@ -36,7 +38,7 @@ const SEO = ({ description, lang, meta, title }) => {
       }}
       title={title}
       titleTemplate={
-        title !== "Home"
+        title !== PAGE_TITLE
           ? `%s · ${site.siteMetadata.title}`
           : `${site.siteMetadata.title}`
       }

@@ -1,6 +1,8 @@
+const { PAGE_TITLE } = require("./src/const")
+
 module.exports = {
   siteMetadata: {
-    title: `Ramblings of a Restless Mind`,
+    title: PAGE_TITLE,
     author: {
       name: `Ân /ən/`,
       summary: `I write things`,
@@ -60,7 +62,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Ramblings of a Restless Mind`,
+        name: PAGE_TITLE,
         short_name: `Ramblings`,
         start_url: `/`,
         background_color: `#30475e`,
