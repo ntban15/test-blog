@@ -28,6 +28,16 @@ Equipped with said opinions, I would declare only one slot for K in the front-en
 
 I felt pretty confident about this approach. It stays true to the Single Source of Truth™️ principle. It enables trivial modifications to the domain entity without worrying about updating each invididual view. Ain't nobody got time for that.
 
-I figured out people actually have time for that, and it is not without justification. Suppose a new requirement comes in which includes the client displaying the thumbnail of K boba tea shop with additional labels on it, **on the details view**. To keep it simple for the client, it is decided that the thumbnail will be modified before it is returned with K in the details request.
+All is well, and suddenly a new requirement pops up. They plan to add extra labels (100% sale off or the like) which overlay the thumbnail image of K boba tea shop **on its details view**. To keep it simple for the client, it is decided that the thumbnail will be modified before it is returned with K in the details request. "Let the server guys take care of it" - reassuringly, the client devs talk to themselves.
 
-![Thumbnail flow](./figure-4.gif)
+![Can you spot it?](./figure-4.gif)
+
+Somehow, each time a user visits the details view of K, the thumbnail image in the list is **changed** to the one in the details view. The client devs ask the server guys. "Oh, we reuse the `image` field for the modified thumbnail". The client devs proceed to find clues in the code. **K returned from the list request also uses the `image` field for its thumbnail**.
+
+Disregarding some major plot holes, combining K from list and details requests has created an interdependency between list and details views of K. Fetching details data for K has modified the `image` property of the **domain entity** of K, which in turn modified the list view that is depending on this domain entity.
+
+Tis but a small bug! An adapter to transform `image` in the details request to `labeled_image` in K domain entity should do the trick. For now, K in the list will use the `image` property, while K in details will refer to `labeled_image`. Decoupling has never been so easy.
+
+![Decoupling image](./figure-5.png)
+
+As time goes by, the team grows, and so does the number of requirements and functions. "Let's add a banner!".  "How about a highlight over the shop name?". Views are added to satisfy users' needs. Adapters are created to keep the domain entity from getting improperly overwritten.
