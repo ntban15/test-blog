@@ -46,10 +46,14 @@ You get the idea. The domain entity is monkey patched over and over again, up to
 
 ![Monkey patch](./figure-6.png)
 
-To a certain extent, creating a domain entity eases the maintainance cost of any source of truth in the application. Go over that limit and you are greeted with one heck of a spaghetti dish. What if I throw the domain entity away? By giving to the fact that users can look at a piece of data from an insurmountable number of perspectives, I persuade myself to see each slice of K boba tea shop as unique. It does not matter if K returned from the list request has the same name as K returned from the detail request. Each one is scoped to only its local view.
+To a certain extent, creating a domain entity eases the maintainance cost of any source of truth in the application. Go over that limit and you are greeted with one heck of a spaghetti dish.
+
+What if I throw the domain entity away? By giving to the fact that users can look at a piece of data from an insurmountable number of perspectives, I can convince myself to see each slice of K boba tea shop as unique. It does not matter if K returned from the list request has the same name as K returned from the detail request. Each one is scoped to only its local view.
 
 ![Detail request](./figure-7.png)
 
 It looks like the problem with interdependency between views has been resolved. If the detail request handler wants to modify the `image` field to accomodate for an animating elephant, the client devs do not have to worry about the list not having enough _room_.
 
-It took me quite a few projects to fully embrace this approach. To be honest, one of the reason for my change of heart was seeing how an application scales out to more than one developer.
+It took me quite a few projects to fully appreciate this approach. To be honest, one of the reason for my change of heart was seeing how an application scales out to more than one developer. Everybody gangsta until they actually have to gang together.
+
+But. There is always a but. Imagine another new requirement comes in and it defines a **like** action that users can use to mark their favorite brand. This action is implemented by rendering a 💙 button in both the detail view and the list item view of a boba tea shop. When a user presses this button, it turns ❤️ to show that the shop has been **liked**.
