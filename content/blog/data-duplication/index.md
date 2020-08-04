@@ -52,8 +52,16 @@ What if I throw the domain entity away? By giving to the fact that users can loo
 
 ![Detail request](./figure-7.png)
 
-It looks like the problem with interdependency between views has been resolved. If the detail request handler wants to modify the `image` field to accomodate for an animating elephant, the client devs do not have to worry about the list not having enough _room_.
+It looks like the problem with interdependency between views has been resolved. If the detail request handler wants to modify the `image` field to accomodate for an animating elephant, the client devs do not have to worry about the list not having enough _room_. Developer experience is greatly improved, especially for large teams with multiple views of our K boba tea shop.
 
-It took me quite a few projects to fully appreciate this approach. To be honest, one of the reason for my change of heart was seeing how an application scales out to more than one developer. Everybody gangsta until they actually have to gang together.
+But developer experience often comes at the cost of user experience. Someone just pushed another new requirement and it defines a **like** action that users can use to mark their favorite brand. This action is implemented by rendering a 💙 button in both the detail view and the list item view of a boba tea shop. When a user presses this button, it turns ❤️ to reflect the fact that the shop has been **liked**.
 
-But. There is always a but. Imagine another new requirement comes in and it defines a **like** action that users can use to mark their favorite brand. This action is implemented by rendering a 💙 button in both the detail view and the list item view of a boba tea shop. When a user presses this button, it turns ❤️ to show that the shop has been **liked**.
+Picture a flow where a user has just navigated to the detail view of K after tapping on the list item. It is logical to assume that the list and detail requests have both been invoked (otherwise there would not be any data). Therefore, the only request left to be called is the one to update the like state of K when the user presses 💙. What will happen if the user presses 💙?
+
+![Like action](./figure-8.gif)
+
+Suppose the like request is successful and K on the cloud is updated. Because the detail view of K is in focus, it is trivial to change 💙 to ❤️ by locally updating the view state or calling the detail request again to get the latest data. What about K item view? We have neither adjusted its local state nor called the list request to refresh data, so there is a high probability of it still displaying 💙.
+
+If we still had our domain entity lying around, it would be just a matter of modifying the `liked` property, and voila every view subscribing to it would be automatically updated. Given that we have thrown it away, the alternative solution I often see is to set a flag to signal the list view to run the refresh procedure when it regains focus. Or if the list data can be refreshed by some kind of message, then that message is dispatched after the user presses 💙 in the detail view. Anyhow, the detail view must have some knowledge of which view has the like logic. An interdependency between views is again created, this time somewhat less elegant because a view must have explicit awareness of others. And we have not touched on how we need to call a **list** request to only update an individual item.
+
+![Another dish of spaghetti](./figure-9.png)
