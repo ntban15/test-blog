@@ -42,7 +42,7 @@ Tis but a small bug! An adapter to transform `image` in the detail request to `l
 
 As time goes by, the team grows, and so does the number of requirements and functions. "Let's add a banner!" "How about a highlight over the shop name?" Views are added to satisfy users' needs. Adapters are created to keep the domain entity from getting improperly overwritten. One day, a new developer adjusts the `description` property of K domain entity and suddenly the screen gets covered with promotion ads for G - the competing boba tea brand.
 
-You get the idea. The domain entity is monkey patched over and over again, up to the point where no one has the slightest idea what it really is. And we have not started on nested data and cicular dependencies.
+You get the idea. The domain entity is monkey patched over and over again, up to the point where no one has the slightest idea what it really is. The situation can get extra complicated when nested data and cicular dependencies are introduced.
 
 ![Monkey patch](./figure-6.png)
 
@@ -60,8 +60,12 @@ Picture a flow where a user has just navigated to the detail view of K after tap
 
 ![Like action](./figure-8.gif)
 
-Suppose the like request is successful and K on the cloud is updated. Because the detail view of K is in focus, it is trivial to change 💙 to ❤️ by locally updating the view state or calling the detail request again to get the latest data. What about K item view? We have neither adjusted its local state nor called the list request to refresh data, so there is a high probability of it still displaying 💙.
+Suppose the like request is successful and K on the cloud is updated. Because the detail view of K is in focus, it is trivial to change 💙 to ❤️ by locally updating the view state or calling the detail request again to get the latest data. What about K item view? I have neither adjusted its local state nor called the list request to refresh data, so there is a high probability of it still displaying 💙.
 
-If we still had our domain entity lying around, it would be just a matter of modifying the `liked` property, and voila every view subscribing to it would be automatically updated. Given that we have thrown it away, the alternative solution I often see is to set a flag to signal the list view to run the refresh procedure when it regains focus. Or if the list data can be refreshed by some kind of message, then that message is dispatched after the user presses 💙 in the detail view. Anyhow, the detail view must have some knowledge of which view has the like logic. An interdependency between views is again created, this time somewhat less elegant because a view must have explicit awareness of others. And we have not touched on how we need to call a **list** request to only update an individual item.
+If I still had our domain entity lying around, it would be just a matter of modifying the `liked` property, and voila every view subscribing to it would be automatically updated. Given that it has been thrown away, the alternative solution I often see is to set a flag to signal the list view to run the refresh procedure when it regains focus. Or if the list data can be refreshed by some kind of message, then that message is dispatched after the user presses 💙 in the detail view. Anyhow, the detail view must have some knowledge of which view has the like logic. An interdependency between views is again created, this time somewhat less elegant because a view must have explicit awareness of others. And I have not touched on how a **list** request is needed to only update an individual item.
 
 ![Another dish of spaghetti](./figure-9.png)
+
+I have examined both ends of the spectrum. As with everything in life, balance is the key to achieve a mantainable design, which means both approaches can coexist. When to use which largely depends on the **ubiquity** and **interactivity** of a type of data with regard to the application. Does it get a lot of *views*? Is it mutated frequently? When the data type appears everywhere but is rarely changed throughout a user session (like [HackerNews articles](https://news.ycombinator.com/)), then there is no point keeping a domain entity. If the data type is interactive and pops up in a handful of screens, it would be wise to save the dynamic state somewhere and make it observable so that any update is synchronized between mutiple instances. What about that one which is both ubiquitous and ever-changing? A partial domain entity to store only the interactive slice of the data (such as the liked status) so that it does not get overwhelmed while changes are still guaranteed to be propagated.
+
+![Getting visual](./figure-10.png)
