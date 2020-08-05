@@ -1,7 +1,7 @@
 ---
-title: Why are there two
+title: Why are there two Spideys?
 date: "2015-05-01T22:12:03.284Z"
-description: My thoughts on data duplication on the front-end
+description: My thoughts on handling lookalike data and how (de)duplication comes into play.
 ---
 
 Pretty much every modern data-driven application operates on lists of things. Think of your typical social feeds, your online orders or simply the results from your go-to search engine™️. Human love lists. To-do lists keep procrastination at bay. "Top 10 series to binge" lists drive boredom away.
@@ -22,7 +22,7 @@ Recently, I have been asking myself. Are both K boba tea shops the same? Does th
 
 When I first started writing front-ends, I had some dogmatic opinions of this. It is clear that both K refer to the same boba tea shop. How is it not be if there is only one entry for K in the database? How is it not be if when a user orders something, the transaction goes through that one and only K boba tea shop? To consider that the versions of K are different is to accept the fact that K is duplicated everytime someone adds a unique view of K. How many screens does an average boba tea application contain?
 
-Equipped with said opinions, I would declare only one slot for K in the front-end storage (Redux, for the experienced). Call it the domain entity. This domain entity represents every instance K is viewed. Whether K is returned from the list request or the detail request, put it into the domain entity.
+Equipped with said opinions, I would declare only one slot for K in the front-end storage. Call it the domain entity. This domain entity represents every instance K is viewed. Whether K is returned from the list request or the detail request, put it into the domain entity.
 
 ![K domain entity](./figure-3.png)
 
@@ -69,3 +69,13 @@ If I still had our domain entity lying around, it would be just a matter of modi
 I have examined both ends of the spectrum. As with everything in life, balance is the key to achieve a mantainable design, which means both approaches can coexist. When to use which largely depends on the **ubiquity** and **interactivity** of a type of data with regard to the application. Does it get a lot of *views*? Is it mutated frequently? When the data type appears everywhere but is rarely changed throughout a user session (like [HackerNews articles](https://news.ycombinator.com/)), then there is no point keeping a domain entity. If the data type is interactive and pops up in a handful of screens, it would be wise to save the dynamic state somewhere and make it observable so that any update is synchronized between mutiple instances. What about that one which is both ubiquitous and ever-changing? A partial domain entity to store only the interactive slice of the data (such as the liked status) so that it does not get overwhelmed while changes are still guaranteed to be propagated.
 
 ![Getting visual](./figure-10.png)
+
+I am bad at graph, and the one above surely does not cover every case one has to encounter when handling data in real applications. In an ideal world, a developer does not have to be asking these questions at all. In that world, one just has to define what pieces of data a view needs without worrying about synchronization and invoking network requests. Getting out of the *framework-agnostic* vibe of this post, I think [GraphQL](https://graphql.org/) comes pretty close to implementing this idea. Data definition is declarative as it should be. The cogs and gears executing the procedures to get the data are nicely abstracted out, leaving developers with only the essentials to get their priorities straight and focus on the right things.
+
+![Declarative data](./figure-11.png)
+
+Sure, it is a long way to go from taking care of everything to saying fuck it all. But for the sanity of my colleagues and me in the chaos of rapidly changing, revamping, remolding, metamorphosing (yes I got that word from a thesaurus) applications, I say *why not?™️*
+
+*You may or may not see it coming, but the title is inspired by this meme. I think it captures the vibe of this post rather nicely.*
+
+![Pointing Spideys](./figure-12.jpg)
