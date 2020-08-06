@@ -5,7 +5,7 @@ description: My thoughts on handling lookalike data and how (de)duplication come
 image: "./figure-2.png"
 ---
 
-Pretty much every modern data-driven application operates on lists of things. Think of your typical social feeds, your online orders, or simply the results from your go-to search engine™️. Human love lists. To-do lists keep procrastination at bay. "Top 10 series to binge" lists drive boredom away.
+Pretty much every modern data-driven application operates on lists of things. Think of your typical social feeds, your online orders, or simply the results from your go-to search engine™. Human love lists. To-do lists keep procrastination at bay. "Top 10 series to binge" lists drive boredom away.
 
 > People are attracted to lists because we live in an era of overstimulation, especially in terms of information... And lists help us in organizing what is otherwise overwhelming.
 >
@@ -27,7 +27,7 @@ Equipped with said opinions, I would declare only one slot for K in the memory. 
 
 ![K domain entity](./figure-3.png)
 
-I felt pretty confident about this approach. It stays true to the Single Source of Truth™️ principle. It enables trivial modifications to the domain entity without worrying about keeping each view in sync. Ain't nobody got time for that.
+I felt pretty confident about this approach. It stays true to the Single Source of Truth™ principle. It enables trivial modifications to the domain entity without worrying about keeping each view in sync. Ain't nobody got time for that.
 
 All is well, and suddenly a new requirement pops up. They plan to add extra labels (100% sale off or the like) which overlay the thumbnail image of K brand **on its detail view**. To keep it simple for the client, it is decided that the thumbnail will be modified before it is returned with K in the detail request. "Let the server guys take care of it." - reassuringly, the client devs talk to themselves.
 
@@ -75,7 +75,7 @@ I am bad at graph, and the one above surely does not cover every case one has to
 
 ![Declarative data](./figure-11.png)
 
-Sure, it is a long way to go from taking care of everything to saying [fuck it all](https://www.youtube.com/watch?v=yJ-jvEd0pDw). But for the sanity of my colleagues and me in the chaos of rapidly changing, revamping, remolding, metamorphosing (yes I got that word from a thesaurus) applications, I'd say _why not?™️_
+Sure, it is a long way to go from taking care of everything to saying [fuck it all](https://www.youtube.com/watch?v=yJ-jvEd0pDw). But for the sanity of my colleagues and me in the chaos of rapidly changing, revamping, remolding, metamorphosing (yes I got that word from a thesaurus) applications, I'd say _why not?™_
 
 _You may or may not see it coming, but the title is inspired by this meme. I think it captures the vibe of this post rather nicely._
 
