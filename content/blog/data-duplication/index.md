@@ -2,6 +2,7 @@
 title: Why are there two Spideys?
 date: "2020-08-05T17:49:56.497Z"
 description: My thoughts on handling lookalike data and how (de)duplication comes into play.
+image: "./figure-2.png"
 ---
 
 Pretty much every modern data-driven application operates on lists of things. Think of your typical social feeds, your online orders, or simply the results from your go-to search engine™️. Human love lists. To-do lists keep procrastination at bay. "Top 10 series to binge" lists drive boredom away.
